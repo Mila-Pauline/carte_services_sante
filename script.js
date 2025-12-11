@@ -18,3 +18,18 @@ fetch('services.csv')
         .bindPopup(`<b>${nom}</b><br>${adresse}<br>${type}`);
     });
   });
+fetch('Secteur_Lausanne.geojson')
+  .then(response => response.json())
+  .then(data => {
+    L.geoJSON(data, {
+      style: {
+        color: 'red',
+        weight: 3,
+        fillOpacity: 0
+      }
+    }).addTo(map);
+
+ // Zoom automatique sur le polygone
+    map.fitBounds(polygone.getBounds());
+  })
+  .catch(err => console.error("Erreur chargement GeoJSON :", err));
