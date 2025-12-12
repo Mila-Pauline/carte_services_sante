@@ -1,16 +1,26 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Services de santé - Lausanne</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
+  <meta charset="UTF-8"/>
+  <title>Services de santé de premier recours à Lausanne</title>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="style.css"/>
+  
+    <!-- Chargement des données -->
+    <script src="Services_sante_Lausanne.js"></script>
 </head>
 <body>
-  <h1>Carte des services de santé de premier recours à Lausanne</h1>
-  <div id="map"></div>
+  <div class="title">
+    <h1>Carte des services de santé de premier recours à Lausanne</h1>
+  <div/>
 
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-  <script src="script.js"></script>
-</body>
+  <div class="main">
+      <div id="map"></div>
+      <div id="coordonnees"></div>
+      <div class="sidebar"></div>
+  </div>
+  <script src="Index.js" defer></script>
+  </body>
 </html>
