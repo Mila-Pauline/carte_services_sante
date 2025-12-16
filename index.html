@@ -1,26 +1,77 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-  <meta charset="UTF-8"/>
+  <meta charset="UTF-8">
   <title>Services de santé de premier recours à Lausanne</title>
 
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-    <link rel="stylesheet" href="style.css"/>
-  
-    <!-- Chargement des données -->
-    <script src="Services_sante_Lausanne.js"></script>
-</head>
-<body>
-  <div class="title">
-    <h1>Carte des services de santé de premier recours à Lausanne</h1>
-  <div/>
+  <!-- Leaflet -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+  />
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 
-  <div class="main">
-      <div id="map"></div>
-      <div id="coordonnees"></div>
-      <div class="sidebar"></div>
-  </div>
-  <script src="Index.js" defer></script>
-  </body>
+  <style>
+    #map {
+      height: 500px;
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>Carte des services de santé de premier recours à Lausanne</h1>
+
+<div id="map"></div>
+
+<script>
+  // Création de la carte
+  var map = L.map('map').setView([46.52, 6.63], 13);
+
+  // Fond de carte
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19
+  }).addTo(map);
+
+  // Donnée GeoJSON (1 point exemple)
+  var Pharmacie_Lausanne = {
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "properties": {
+          "Nom": "Pharmacie des Grangettes",
+          "Adresse": "Chemin des Eterpeys 14 1010 Lausanne",
+          "Horaires": "lun-ven : 8h30-12h 13h30-18h30 sam : 8h30-12h"
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [6.6619, 46.5364]
+        }
+      }
+    ]
+  };
+
+  // Ajout du point + popup
+  L.geoJSON(Pharmacie_Lausanne, {
+    pointToLayer: function (feature, latlng) {
+      return L.circleMarker(latlng, {
+        radius: 8,
+        color: "red",
+        fillColor: "#ff6666",
+        fillOpacity: 0.9
+      });
+    },
+    onEachFeature: function (feature, layer) {
+      layer.bindPopup(
+        "<b>" + feature.properties.Nom + "</b><br>" +
+        feature.properties.Adresse + "<br>" +
+        "Horaires : " + feature.properties.Horaires
+      );
+    }
+  }).addTo(map);
+</script>
+
+</body>
 </html>
