@@ -1,4 +1,4 @@
-var Urgence_Lausanne = {
+var Urgence = {
 "type": "FeatureCollection",
 "features": [
   { 
@@ -116,7 +116,7 @@ var Urgence_Lausanne = {
   { 
     "type": "Feature",
     "properties": {
-      "Nom": "Clinique Cecil groupe Hirslanden par Ouchy"
+      "Nom": "Clinique Cecil groupe Hirslanden par Ouchy",
       "Description": "Urgences",
       "Localisation": "Lausanne",
       "Adresse": "Avenue Louis-Ruchonnet 53 1003 Lausanne",
@@ -135,7 +135,7 @@ var Urgence_Lausanne = {
       "Localisation": "Lausanne",
       "Adresse": "Route de Chavannes 11 1007 Lausanne",
       "Horaires": "lun-ven : 7h-21h sam-dim : 9h-21h" 
-    } 
+    },
     "geometry": {
       "type": "Point",
       "coordinates": [ 6.60044, 46.518211 ] 
@@ -156,4 +156,4 @@ var Urgence_Lausanne = {
     }
    }   
   ]
-}, 
+};

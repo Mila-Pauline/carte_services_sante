@@ -1,4 +1,4 @@
-var Pharmacie_Lausanne = {
+var Pharmacie = {
 "type": "FeatureCollection",
 "features": [
 	 {
@@ -618,4 +618,4 @@ var Pharmacie_Lausanne = {
       }
     }
   ]
-}, 
+};

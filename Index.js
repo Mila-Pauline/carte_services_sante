@@ -7,68 +7,105 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '&copy; OpenStreetMap contributors'
 }).addTo(map);
 
-// Icônes personnalisées
-var HopitalIcon = L.icon({
-  iconUrl: 'Icones/Hopital.png',
-  iconSize: [25, 30],
-  iconAnchor: [12, 30],
-  popupAnchor: [0, -30]
+// Définir des icônes personnalisées pour chaque type de zone
+var PharmacieIcon = L.icon({
+  iconUrl: 'Icones/Pharmacie.png',
+  iconSize: [15, 20], 
+  iconAnchor: [14, 40], 
+  popupAnchor: [0, -40]
 });
 
 var MedecinIcon = L.icon({
-  iconUrl: 'Icones/Médecin.png',
-  iconSize: [25, 30],
-  iconAnchor: [12, 30],
-  popupAnchor: [0, -30]
+  iconUrl: 'Icones/Medecin.png',
+  iconSize: [15, 20],
+  iconAnchor: [14, 40],
+  popupAnchor: [0, -40]
 });
 
-var PharmacieIcon = L.icon({
-  iconUrl: 'Icones/Pharmacie.png',
-  iconSize: [25, 30],
-  iconAnchor: [12, 30],
-  popupAnchor: [0, -30]
+var UrgenceIcon = L.icon({
+  iconUrl: 'Icones/Urgence.png', 
+  iconSize: [15, 20],
+  iconAnchor: [14, 40],
+  popupAnchor: [0, -40]
 });
 
-// Fonction générique pour ajouter une couche GeoJSON
+// Fonction pour ajouter une couche GeoJSON et configurer les popups
 function addLayer(layerData, color, icon) {
-  return L.geoJSON(layerData, {
-    style: function () {
-      return {
-        color: color,
-        weight: 1,
-        opacity: 1,
-        fillOpacity: 0.5
-      };
-    },
+  return L.geoJSON( layerData, {
+   style: function() {
+     return {
+     color: color,
+     weight: 1,
+     opacity: 1,
+     fillOpacity: 0.5,
+  };
+},
 
-    pointToLayer: function (feature, latlng) {
-      return L.marker(latlng, { icon: icon });
-    },
+pointToLayer: function(feature, latlng) {
+  return L.marker(latlng, { icon: icon }); // Utilise l'icône personnalisée
+},
 
-    onEachFeature: function (feature, layer) {
-      if (feature.properties) {
-        let popupContent = "<strong>" + (feature.properties.nom || "Sans nom") + "</strong>";
-        layer.bindPopup(popupContent);
-      }
-    }
-  });
+onEachFeature: function(feature, layer) {
+  layer.on('click', function() {
+  console.log("Clicked on feature:", feature); // Log pour vérifier le contenu de la feature
+
+// Fonction pour mettre à jour le panneau latéral (infoBox)
+    updateInfoBox(feature);
+   });
+  }
+ });
 }
 
-// Création des couches
-var HopitalLayer = addLayer(Hopital, '#28a745', HopitalIcon);
-var MedecinLayer = addLayer(Medecin, '#007bff', MedecinIcon);
-var PharmacieLayer = addLayer(Pharmacie, '#8B4513', PharmacieIcon);
+// Fonction pour mettre à jour le panneau latéral
+function updateInfoBox(feature) {
+  var infoBox = document.getElementById('infoBox');
 
-// Ajout des couches à la carte
-HopitalLayer.addTo(map);
-MedecinLayer.addTo(map);
-PharmacieLayer.addTo(map);
+// Extraire les informations des propriétés du GeoJSON
+  var Nom = feature.properties.Nom || 'Nom non disponible';
+  var Description = feature.properties.Description || 'Description non disponible';
+  var Adresse = feature.properties.Adresse || 'Adresse non disponible';
+  var Horaire = feature.properties.Horaire || 'Horaire non disponible';
 
-// Contrôle des couches
-var overlayMaps = {
-  "Hôpitaux": HopitalLayer,
-  "Médecins": MedecinLayer,
-  "Pharmacies": PharmacieLayer
-};
+// Construire dynamiquement le contenu du panneau
+  var infoContent = "<h3>" + Nom + "</h3>";
+  infoContent += "<p><b>Description:</b> " + Description+ "</p>";
+  infoContent += "<p><b>Adresse:</b> " + Adresse + "</p>";
+  infoContent += "<p><b>Horaire:</b> " + Horaire + "</p>";
 
-L.control.layers(null, overlayMaps).addTo(map);
+
+// Mettre à jour l'infoBox dans la sidebar
+  infoBox.innerHTML = infoContent;
+}
+
+// Définir les couches de chaque zone
+var PharmacieLayer = addLayer(Pharmacie, '#8B4513', PharmacieIcon);  // Pharmacie - Rouge
+var MedecinLayer = addLayer(Medecin, '#007bff', MedecinIcon);  // Medecin - Bleu
+var UrgenceLayer = addLayer(Urgence, '#28a745', UrgenceIcon) ;  // Urgence - Vert
+
+// Ajouter toutes les couches au démarrage
+map.addLayer(PharmacieLayer);
+map.addLayer(MedecinLayer);
+map.addLayer(UrgenceLayer);
+
+// Ajouter la fonctionnalité de sélection dans le menu
+document.getElementById('zone-select').addEventListener('change', function(e) {
+  var value = e.target.value;
+
+if (value === 'Pharmacie') {
+    map.addLayer(PharmacieLayer);
+    map.removeLayer(MedecinLayer);
+    map.removeLayer(UrgenceLayer);
+ } else if (value === 'Medecin') {
+    map.addLayer(MedecinLayer);
+    map.removeLayer(PharmacieLayer);
+    map.removeLayer(UrgenceLayer);
+ } else if (value === 'Urgence') {
+    map.addLayer(UrgenceLayer);
+    map.removeLayer(PharmacieLayer);
+    map.removeLayer(MedecinLayer);
+ } else {
+    map.removeLayer(PharmacieLayer);
+    map.removeLayer(MedecinLayer);
+    map.removeLayer(UrgenceLayer);
+  }
+});

@@ -1,4 +1,4 @@
-var Services_sante_Lausanne = {
+var Medecin = {
 "type": "FeatureCollection",
 "features": [
    { 
@@ -156,4 +156,4 @@ var Services_sante_Lausanne = {
       }
     }
   ]
-}, 
+};

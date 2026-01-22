@@ -1,22 +1,97 @@
 body {
-  margin: 0;
-  font-family: Arial, sans-serif;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  margin: 20px;
 }
-#map {
-  height: 90vh;
-  width: 100%;
-}
+
 h1 {
-  text-align: center;
-  padding: 10px;
+  font-size: 14pt;
+  font-weight: bold;
 }
-body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
+
+.main {
+  position: relative;
+}
+
+.recherche select {
+  height: 24px;
+  width: 100%;
+  background-color: #fff;
+  border-color: #555;
+  margin-top: 10px
+}
+.recherche select:focus {
+  outline-color: #5da9dd;
+}
+
+.recherche input {
+  width: 200px;
+  height: 30px;
+  padding: 5px;
+}
+
+#coordonnees {
+  position: absolute;
+  left: 0;
+  top: calc(100vh - 100px);
+  font-size: 12px;
+  color: #999;
+}
+
+.sidebar {
+  position: absolute;
+  top: 0;
+  left: calc(100vw - 395px);
+  width: 330px;
+  height: calc(100vh - 110px);
+  min-height: 450px;
+  background-color: #f0f0f0;
+  border: 1px solid #c0c0c0;
+  padding: 15px;
+}
+
+.infobox {
+  position:absolute;
+  bottom:50;
+  margin-top: 5px;
+}
+
+div.details {
+  padding: 15px;
+  border: 1px solid #d9217e;
+  margin-right: 15px;
+  background-color: white;
+}
+div.details h2 {
+  max-height: 32px;
+  margin-right: 15px;
+}
+div.details h3 {
+  font-size: 26px;
+  font-weight: 400;
+  margin-top: 0;
 }
 
 #map {
-    height: 600px;
-    width: 100%;
-    margin-top: 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(100vw - 400px);
+  height: calc(100vh - 80px);
+  min-height: 480px;
+  background-color: #999;
+  border: 1px solid #c0c0c0;
+}
+
+.copyright {
+  position: absolute;
+  bottom: 0;
+  font-size: 8pt;
+  margin-bottom: 3px;
+}
+
+.leaflet-tooltip.etiquette {
+  background-color: #000;
+  opacity: 0.5 !important;
+  color: #fff;
 }
