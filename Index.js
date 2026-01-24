@@ -64,13 +64,13 @@ function updateInfoBox(feature) {
   var Nom = feature.properties.Nom || 'Nom non disponible';
   var Description = feature.properties.Description || 'Description non disponible';
   var Adresse = feature.properties.Adresse || 'Adresse non disponible';
-  var Horaire = feature.properties.Horaire || 'Horaire non disponible';
+  var Horaires = feature.properties.Horaires || 'Horaires non disponible';
 
 // Construire dynamiquement le contenu du panneau
   var infoContent = "<h3>" + Nom + "</h3>";
   infoContent += "<p><b>Description:</b> " + Description+ "</p>";
   infoContent += "<p><b>Adresse:</b> " + Adresse + "</p>";
-  infoContent += "<p><b>Horaire:</b> " + Horaire + "</p>";
+  infoContent += "<p><b>Horaires:</b> " + Horaires + "</p>";
 
 
 // Mettre à jour l'infoBox dans la sidebar
